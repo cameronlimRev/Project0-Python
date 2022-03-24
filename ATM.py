@@ -1,4 +1,5 @@
 import mysql.connector
+import logging
 from User import User
 from datetime import datetime
 
@@ -9,6 +10,9 @@ global current_user
 global current_pin
 global current_id
 global user
+
+#SETUP LOGGING
+logging.basicConfig(filename='errors.log', encoding='utf-8', level=logging.DEBUG)
 
 #DATABASE CONNECTION
 mydb = mysql.connector.connect(
@@ -50,9 +54,11 @@ def create_account():
     print("You will need a four digit PIN.")
     print("Please enter your desired PIN: ")
     requested_pin = -1
+
     while (requested_pin < 0):
         try: 
             requested_pin = int(input())
+            logging.error("If you pressed enter then without any input then you probably got this error")
         except ValueError:
             print("Invalid input. Try again.")
 
