@@ -122,6 +122,8 @@ def open_login():
         get_pin = int(input())
     except ValueError:
         print("Please enter a PIN with only integers.")
+        logging.error("If you pressed enter then without any input then you probably got this error")
+        
 
     #We authenticate the password and username by making sure there is only one instance of that pair in our database. If there are duplicates it would not work.
     mycursor.execute(f"SELECT count(*) AS counter FROM userlogins WHERE userName=('{get_username}') AND userPin=({get_pin})")
