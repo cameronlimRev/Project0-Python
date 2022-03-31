@@ -22,7 +22,7 @@ mydb = mysql.connector.connect(
     database = "demodatabase"
 )
 
-mycursor = mydb.cursor(buffered=True)
+mycursor = mydb.cursor()
 
 #INITIALIZE OUR VARIABLES
 current_user = ''
@@ -98,8 +98,8 @@ def open_login():
     """
 
     #Open Login Dialog
-    print("""  _____________________________________
-    //       Welcome to Revature Banking       \\
+    print("""       _______________________________________
+    //       Welcome to Revature Banking       \\\\
     || If you need to register for a new       ||
     || account please enter "New" below.       ||
     || Please enter your login information:    ||
@@ -160,7 +160,7 @@ def open_menu(current_user):
 
     print(f""" 
        _______________________________________
-    //   Welcome to Revature Banking, {current_user}  \\\\
+     //   Welcome to Revature Banking, {current_user}   \\\\
     || ========================================||
     || 1. Check Balance                        ||
     || 2. Deposit Money                        ||
@@ -324,6 +324,8 @@ def delete(user_id):
     confirm = str(input())
     if (confirm == 'Yes'):
         mycursor.execute(f"DELETE FROM userdata WHERE user_id='{user_id}'")
+        mydb.commit()
+        mycursor.execute(f"DELETE FROM transactions WHERE sender_id='{user_id}' OR receiver_id='{user_id}'")
         mydb.commit()
         mycursor.execute(f"DELETE FROM userlogins WHERE id='{user_id}'")
         mydb.commit()
